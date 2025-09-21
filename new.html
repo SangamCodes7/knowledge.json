@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Chatbot</title>
+</head>
+<body>
+    <h2>College Chatbot</h2>
+    <select id="lang">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="gu">Gujarati</option>
+        <option value="mrw">Marwadi</option>
+        <option value="mr">Marathi</option>
+    </select>
+    <input type="text" id="question" placeholder="Type your question here">
+    <button onclick="askBot()">Ask</button>
+    <p id="answer"></p>
+
+    <script>
+        async function askBot() {
+            const question = document.getElementById("question").value;
+            const language = document.getElementById("lang").value;
+            const response = await fetch('http://127.0.0.1:8000/ask', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({question: question, language: language})
+            });
+            const data = await response.json();
+            document.getElementById("answer").innerText = data.answer;
+        }
+    </script>
+</body>
+</html>
